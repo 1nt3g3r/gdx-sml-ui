@@ -12,11 +12,11 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonWriter.OutputType;
 import com.badlogic.gdx.utils.ObjectMap;
-import com.badlogic.gdx.utils.OrderedMap;
 import com.badlogic.gdx.utils.XmlReader;
 
 import ua.com.integer.gdx.xml.ui.creator.ActorCreator;
-import ua.com.integer.gdx.xml.ui.setup.ActorSetup;
+import ua.com.integer.gdx.xml.ui.eval.Eval;
+import ua.com.integer.gdx.xml.ui.setup.ActorProcessor;
 
 public class ActorDef {
 	private String name;
@@ -85,7 +85,12 @@ public class ActorDef {
 	}
 
 	public static void inflate(ActorDef def, Group parent) {
-		def.result = ActorCreator.createActor(def.name);
+        if (def.name.equals("var")) {
+            Eval.setVar(def.getAttributes().get("name"), def.getAttributes().get("value"));
+            return;
+        }
+
+		def.result = ActorCreator.createActor(def.name, def);
 		if (parent instanceof ScrollPane) {
 			((ScrollPane) parent).setWidget(def.result);
 		} else if (parent instanceof Window) {
@@ -95,7 +100,7 @@ public class ActorDef {
 			parent.addActor(def.result);
 		}
 		def.transform.target(def.result).apply();
-        ActorSetup.setup(def);
+        ActorProcessor.setup(def);
 
 		if(def.result instanceof Group) {
 			Group g = (Group) def.result;
@@ -104,7 +109,7 @@ public class ActorDef {
 			}
 		}
 	}
-	
+
 	public void updateTransform() {
 		transform().target(result).apply();
 		

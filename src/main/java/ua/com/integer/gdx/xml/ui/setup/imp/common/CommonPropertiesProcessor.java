@@ -2,9 +2,9 @@ package ua.com.integer.gdx.xml.ui.setup.imp.common;
 
 import com.badlogic.gdx.scenes.scene2d.Actor;
 
-import ua.com.integer.gdx.xml.ui.setup.ActorSetup;
+import ua.com.integer.gdx.xml.ui.setup.ActorProcessor;
 
-public class CommonPropertiesSetup extends ActorSetup {
+public class CommonPropertiesProcessor extends ActorProcessor {
     @Override
     public void setup() {
         Actor a = actorDef.getActor();
@@ -26,7 +26,7 @@ public class CommonPropertiesSetup extends ActorSetup {
         }
 
         if (hasValue("color")) {
-            a.setColor(color("color"));
+            a.setColor(getColor("color"));
         }
 
         if (hasValue("toBack")) {

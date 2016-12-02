@@ -5,9 +5,9 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 
 import ua.com.integer.gdx.xml.ui.eval.Eval;
-import ua.com.integer.gdx.xml.ui.setup.ActorSetup;
+import ua.com.integer.gdx.xml.ui.setup.ActorProcessor;
 
-public class VisualEffectsSetup extends ActorSetup {
+public class VisualEffectsSetup extends ActorProcessor {
     private Actor a;
 
     @Override
@@ -46,7 +46,7 @@ public class VisualEffectsSetup extends ActorSetup {
             String colorName = getValue("changeColorOnClick");
             Color color = Color.GRAY;
             if (!colorName.equals("default")) {
-                color = color("changeColorOnClick");
+                color = getColor("changeColorOnClick");
             }
 
             a.addListener(new ColorChangeListener(color));

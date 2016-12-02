@@ -2,11 +2,10 @@ package ua.com.integer.gdx.xml.ui.setup.imp.common;
 
 import com.badlogic.gdx.utils.Array;
 
-import ua.com.integer.gdx.xml.ui.res.AssetProvider;
 import ua.com.integer.gdx.xml.ui.res.Assets;
-import ua.com.integer.gdx.xml.ui.setup.ActorSetup;
+import ua.com.integer.gdx.xml.ui.setup.ActorProcessor;
 
-public class VariableSetup extends ActorSetup {
+public class VariableSetup extends ActorProcessor {
     private Array<String> tmpArray = new Array<>();
 
     @Override
@@ -35,7 +34,8 @@ public class VariableSetup extends ActorSetup {
         }
 
         for(String var : tmpArray) {
-            value = value.replace("$" + var + "$", Assets.getInstance().getAsset(var, String.class).toString());
+            String varValue = Assets.getInstance().getAsset(var, String.class);
+            value = value.replace("$" + var + "$", varValue);
         }
 
         return value;

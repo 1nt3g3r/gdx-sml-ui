@@ -14,8 +14,8 @@ public class Assets {
     private Assets() {
     }
 
-    public Object getAsset(String name, Class assetClass) {
-        return assetProviders.get(assetClass).getAsset(name);
+    public <T extends Object> T getAsset(String name, Class assetClass) {
+        return (T) assetProviders.get(assetClass).getAsset(name);
     }
 
     public void registerAssetProvider(Class cl, AssetProvider assetProvider) {

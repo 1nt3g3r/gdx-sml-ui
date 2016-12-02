@@ -16,8 +16,9 @@ public class FloatingEffectAction extends RepeatAction {
         this.floatDistance = fDistance;
         setCount(RepeatAction.FOREVER);
 
+        firstActorInit(actor);
+
         setAction(Actions.sequence(
-                Actions.delay(0.1f),
                 Actions.run(new Runnable() {
                     @Override
                     public void run() {
@@ -30,7 +31,18 @@ public class FloatingEffectAction extends RepeatAction {
                         float newY = originalY + dy;
                         getActor().addAction(Actions.moveTo(newX, newY, 0.09f));
                     }
-                })
+                }),
+                Actions.delay(0.1f)
         ));
+    }
+
+    private void firstActorInit(Actor actor) {
+        float dx = floatDistance * MathUtils.sinDeg(floatingAngle);
+        float dy = floatDistance * MathUtils.cosDeg(floatingAngle);
+
+        float newX = originalX + dx;
+        float newY = originalY + dy;
+
+        actor.setPosition(newX, newY);
     }
 }
