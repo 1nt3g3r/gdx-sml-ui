@@ -1,8 +1,6 @@
-package ua.com.integer.gdx.xml.ui.setup.imp.common.visual;
+package ua.com.integer.gdx.xml.ui.setup.imp.common.effect;
 
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.scenes.scene2d.Action;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;

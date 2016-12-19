@@ -2,12 +2,12 @@ package ua.com.integer.gdx.xml.ui.setup.imp;
 
 import com.badlogic.gdx.scenes.scene2d.Group;
 
-import ua.com.integer.gdx.xml.ui.setup.ActorProcessor;
+import ua.com.integer.gdx.xml.ui.setup.XUIProcessor;
 
-public class GroupProcessor extends ActorProcessor {
+public class GroupProcessor extends XUIProcessor {
     @Override
     public void setup() {
-        Group group = (Group) actorDef.getActor();
+        Group group = (Group) XUIElement.getActor();
 
         if (hasValue("transform")) {
             group.setTransform(bool("transform"));

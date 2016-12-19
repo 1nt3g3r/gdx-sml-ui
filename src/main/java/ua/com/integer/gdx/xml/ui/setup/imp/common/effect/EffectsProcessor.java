@@ -1,22 +1,24 @@
-package ua.com.integer.gdx.xml.ui.setup.imp.common.visual;
+package ua.com.integer.gdx.xml.ui.setup.imp.common.effect;
 
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 
 import ua.com.integer.gdx.xml.ui.eval.Eval;
-import ua.com.integer.gdx.xml.ui.setup.ActorProcessor;
+import ua.com.integer.gdx.xml.ui.setup.XUIProcessor;
 
-public class VisualEffectsSetup extends ActorProcessor {
+public class EffectsProcessor extends XUIProcessor {
     private Actor a;
 
     @Override
     public void setup() {
-        a = actorDef.getActor();
+        a = XUIElement.getActor();
 
         checkForFloatingEffect();
         checkForMoveUpDownEffect();
         checkForColorChangeEffect();
+        checkForSoundClickEffect();
     }
 
     private void checkForFloatingEffect() {
@@ -50,6 +52,13 @@ public class VisualEffectsSetup extends ActorProcessor {
             }
 
             a.addListener(new ColorChangeListener(color));
+        }
+    }
+
+    private void checkForSoundClickEffect() {
+        if (hasValue("soundOnClick")) {
+            Sound sound = getSound("soundOnClick");
+            a.addListener(new SoundClickListener(sound));
         }
     }
 }

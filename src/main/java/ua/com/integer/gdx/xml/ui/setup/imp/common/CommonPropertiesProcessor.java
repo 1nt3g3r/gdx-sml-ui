@@ -2,12 +2,12 @@ package ua.com.integer.gdx.xml.ui.setup.imp.common;
 
 import com.badlogic.gdx.scenes.scene2d.Actor;
 
-import ua.com.integer.gdx.xml.ui.setup.ActorProcessor;
+import ua.com.integer.gdx.xml.ui.setup.XUIProcessor;
 
-public class CommonPropertiesProcessor extends ActorProcessor {
+public class CommonPropertiesProcessor extends XUIProcessor {
     @Override
     public void setup() {
-        Actor a = actorDef.getActor();
+        Actor a = XUIElement.getActor();
 
         if (hasValue("name")) {
             a.setName(getValue("name"));
@@ -40,48 +40,5 @@ public class CommonPropertiesProcessor extends ActorProcessor {
         if (hasValue("zIndex")) {
             a.setZIndex(getInt("zIndex"));
         }
-
-        if (hasValue("origin")) {
-            a.setOrigin(getAlign("origin"));
-        }
-
-        if (hasValue("alignPos")) {
-            a.setPosition(a.getX(), a.getY(), getAlign("alignPos"));
-        }
-
-        if (hasValue("position")) {
-            setupPosition();
-        }
-    }
-
-    private void setupPosition() {
-        Actor a = actorDef.getActor();
-
-        if (!a.hasParent()) {
-            return;
-        }
-
-        String[] parts = getValue("position").replace(" ", "").split("\\|");
-        float x = 0;
-        float y = 0;
-        for(String part : parts) {
-            if (part.equals("left")) {
-                x = 0;
-            } else if (part.equals("right")) {
-                x = a.getParent().getWidth() - a.getWidth();
-            } else if (part.equals("centerHorizontal")) {
-                x = (a.getParent().getWidth() - a.getWidth())/2f;
-            }
-
-            if (part.equals("bottom")) {
-                y = 0;
-            } else if (part.equals("top")) {
-                y = a.getParent().getHeight() - a.getHeight();
-            } else if (part.equals("centerVertical")) {
-                y = (a.getParent().getHeight() - a.getHeight())/2f;
-            }
-        }
-
-        a.setPosition(x, y);
     }
 }
