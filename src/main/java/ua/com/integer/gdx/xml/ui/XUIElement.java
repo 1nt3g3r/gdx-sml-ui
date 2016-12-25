@@ -61,6 +61,26 @@ public class XUIElement {
 		inflate(this, parent);
 	}
 
+    public void setAttribute(String name, String value) {
+        String[] valueParts = value.split("#");
+
+        XUIElement current = this;
+        for(int i = 0; i < valueParts.length - 1; i++) {
+            current = findChild(valueParts[i]);
+        }
+
+        current.attributes.put(name, valueParts[valueParts.length - 1]);
+    }
+
+    public XUIElement findChild(String name) {
+        for(XUIElement child : children) {
+            if (child.name.equals(name)) {
+                return child;
+            }
+        }
+        return null;
+    }
+
 	public static void inflate(XUIElement def, Group parent) {
         if (def.name.equals("var")) {
             Eval.setVar(def.attributes.get("name"), def.attributes.get("value"));
@@ -121,5 +141,4 @@ public class XUIElement {
 	public Actor getActor() {
 		return result;
 	}
-
 }
