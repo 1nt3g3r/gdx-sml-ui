@@ -14,7 +14,14 @@ public class LinkedXUICreator extends XUICreator {
 
         XUIElement linkedDef = XUI.get(element.attributes.get("path"));
         linkedDef.copyTo(element);
-        element.attributes.putAll(originalAttributes);
+
+        for(String attributeName : originalAttributes.keys()) {
+            String attributeValue = originalAttributes.get(attributeName);
+            element.setAttribute(attributeName, attributeValue);
+            if(attributeValue.contains("#")) {
+                element.attributes.remove(attributeName);
+            }
+        }
 
         return XUICreator.createActor(element.name, element);
     }

@@ -33,7 +33,10 @@ public class XUIElement {
 
     public void copyTo(XUIElement another) {
         another.name = name;
-        another.attributes.putAll(attributes);
+        for(String attributeName: attributes.keys()) {
+            another.setAttribute(attributeName, attributes.get(attributeName));
+        }
+//        another.attributes.putAll(attributes);
         for(int i = 0; i < children.size; i++) {
             another.children.add(children.get(i).copy());
         }
@@ -66,7 +69,8 @@ public class XUIElement {
 
         XUIElement current = this;
         for(int i = 0; i < valueParts.length - 1; i++) {
-            current = findChild(valueParts[i]);
+			String childName = valueParts[i];
+			current = findChild(childName);
         }
 
         current.attributes.put(name, valueParts[valueParts.length - 1]);
@@ -74,7 +78,7 @@ public class XUIElement {
 
     public XUIElement findChild(String name) {
         for(XUIElement child : children) {
-            if (child.name.equals(name)) {
+            if (child.attributes.get("name").equals(name)) {
                 return child;
             }
         }
