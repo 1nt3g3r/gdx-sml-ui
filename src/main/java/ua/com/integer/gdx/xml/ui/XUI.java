@@ -12,6 +12,7 @@ import com.badlogic.gdx.utils.ObjectMap;
 
 import ua.com.integer.gdx.xml.ui.creator.XUICreator;
 import ua.com.integer.gdx.xml.ui.res.XUIAssets;
+import ua.com.integer.gdx.xml.ui.res.XUIVariables;
 import ua.com.integer.gdx.xml.ui.setup.XUIProcessor;
 
 public class XUI {
@@ -19,6 +20,8 @@ public class XUI {
 
     private String workingDirectory = "xui";
     private ObjectMap<String, XUIElement> defs = new ObjectMap<>();
+
+    private XUIVariables variables = new XUIVariables();
 
     private XUIAssets assets = new XUIAssets();
 
@@ -31,6 +34,10 @@ public class XUI {
 
     public static void setWorkingDirectory(String workingDirectory) {
         getInstance().workingDirectory = workingDirectory;
+    }
+
+    public static String getWorkingDirectory() {
+        return getInstance().workingDirectory;
     }
 
     public static XUIElement get(String name) {
@@ -67,10 +74,15 @@ public class XUI {
     }
 
     public static void init() {
+        variables().clear();
         XUICreator.init();
         XUIProcessor.init();
 
         getInstance().assets = new XUIAssets();
         getInstance().defs.clear();
+    }
+
+    public static XUIVariables variables() {
+        return getInstance().variables;
     }
 }

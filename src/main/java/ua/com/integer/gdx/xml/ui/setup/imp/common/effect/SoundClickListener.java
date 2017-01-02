@@ -4,6 +4,8 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
+import ua.com.integer.gdx.xml.ui.XUI;
+
 public class SoundClickListener extends ClickListener {
     private Sound sound;
 
@@ -13,8 +15,14 @@ public class SoundClickListener extends ClickListener {
 
     @Override
     public void clicked(InputEvent event, float x, float y) {
-        if (sound != null) {
-            sound.play();
+        if (!XUI.variables().getBoolean("sound.enabled", true)) {
+            return;
         }
+
+        if (sound == null) {
+            return;
+        }
+
+        sound.play();
     }
 }

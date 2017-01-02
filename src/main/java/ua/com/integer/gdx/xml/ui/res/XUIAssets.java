@@ -1,9 +1,11 @@
 package ua.com.integer.gdx.xml.ui.res;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.utils.ObjectMap;
 import com.badlogic.gdx.utils.XmlReader;
 
+import ua.com.integer.gdx.xml.ui.XUI;
 import ua.com.integer.gdx.xml.ui.res.parser.XUIAssetParser;
 import ua.com.integer.gdx.xml.ui.res.parser.imp.XUIColorParser;
 import ua.com.integer.gdx.xml.ui.res.parser.imp.XUIDrawableParser;
