@@ -21,6 +21,14 @@ public class XUIAssets {
         registerDefaultAssetParsers();
     }
 
+    public void loadDefaultAssets() {
+        String path = XUI.getWorkingDirectory() + "/assets.xml";
+        FileHandle assetFileHandle = Gdx.files.internal(path);
+        if (assetFileHandle.exists()) {
+            parseAssets(assetFileHandle);
+        }
+    }
+
     private void registerDefaultAssetParsers() {
         registerAssetParser("color", new XUIColorParser(this));
         registerAssetParser("drawable", new XUIDrawableParser());

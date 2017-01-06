@@ -23,7 +23,7 @@ public class XUI {
 
     private XUIVariables variables = new XUIVariables();
 
-    private XUIAssets assets = new XUIAssets();
+    private XUIAssets assets;
 
     public static XUI getInstance() {
         return instance;
