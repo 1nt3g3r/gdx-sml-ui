@@ -8,6 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ObjectMap;
+import com.badlogic.gdx.utils.StringBuilder;
 import com.badlogic.gdx.utils.XmlReader;
 
 import ua.com.integer.gdx.xml.ui.creator.XUICreator;
@@ -30,17 +31,6 @@ public class XUIElement {
 		}
 		return result;
 	}
-
-    public void copyTo(XUIElement another) {
-        another.name = name;
-        for(String attributeName: attributes.keys()) {
-            another.setAttribute(attributeName, attributes.get(attributeName));
-        }
-//        another.attributes.putAll(attributes);
-        for(int i = 0; i < children.size; i++) {
-            another.children.add(children.get(i).copy());
-        }
-    }
 	
 	public XUIElement setVar(String name, String value) {
 		attributes.put(name, value);
@@ -65,20 +55,20 @@ public class XUIElement {
 	}
 
     public void setAttribute(String name, String value) {
-        String[] valueParts = value.split("#");
+        String[] nameParts = name.split("\\.");
 
         XUIElement current = this;
-        for(int i = 0; i < valueParts.length - 1; i++) {
-			String childName = valueParts[i];
-			current = findChild(childName);
+        for(int i = 0; i < nameParts.length - 1; i++) {
+			String childName = nameParts[i];
+			current = current.findChild(childName);
         }
 
-        current.attributes.put(name, valueParts[valueParts.length - 1]);
+        current.attributes.put(nameParts[nameParts.length - 1], value);
     }
 
     public XUIElement findChild(String name) {
         for(XUIElement child : children) {
-            if (child.attributes.get("name").equals(name)) {
+            if (child.attributes.get("name", "").equals(name)) {
                 return child;
             }
         }
@@ -91,7 +81,8 @@ public class XUIElement {
             return;
         }
 
-		def.result = XUICreator.createActor(def.name, def);
+        def.result = XUICreator.createActor(def.name, def);
+
 		if (parent instanceof ScrollPane) {
 			((ScrollPane) parent).setWidget(def.result);
 		} else if (parent instanceof Window) {
@@ -144,5 +135,54 @@ public class XUIElement {
 	
 	public Actor getActor() {
 		return result;
+	}
+
+    /** Returns a description of the actor hierarchy, recursively. */
+    public String toString () {
+        StringBuilder buffer = new StringBuilder(128);
+        toString(buffer, 1);
+        buffer.setLength(buffer.length() - 1);
+        return buffer.toString();
+    }
+
+    void toString (StringBuilder buffer, int indent) {
+        String description = name;
+        buffer.append(getDescription());
+        buffer.append('\n');
+
+        for (int i = 0, n = children.size; i < n; i++) {
+            for (int ii = 0; ii < indent; ii++)
+                buffer.append("|  ");
+            XUIElement actor = children.get(i);
+            if (actor.children.size > 0)
+                actor.toString(buffer, indent + 1);
+            else {
+                buffer.append(actor);
+                buffer.append('\n');
+            }
+        }
+    }
+
+    String getDescription() {
+        StringBuilder description = new StringBuilder();
+        description.append(name).append(", attributes: ").append(attributes);
+        return description.toString();
+    }
+
+    public static void main(String[] args) {
+		XUIElement a = new XUIElement();
+        a.attributes.put("name", "aElem");
+        a.name = "A";
+
+        XUIElement b = new XUIElement();
+        b.name = "B";
+        a.children.add(b);
+
+        XUIElement c = new XUIElement();
+        c.name = "C";
+        b.children.add(c);
+
+
+        System.out.println(a);
 	}
 }

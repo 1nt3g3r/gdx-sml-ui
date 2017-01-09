@@ -9,7 +9,6 @@ import ua.com.integer.gdx.xml.ui.XUIElement;
 import ua.com.integer.gdx.xml.ui.creator.imp.GroupCreator;
 import ua.com.integer.gdx.xml.ui.creator.imp.ImageCreator;
 import ua.com.integer.gdx.xml.ui.creator.imp.LabelCreator;
-import ua.com.integer.gdx.xml.ui.creator.imp.LinkedXUICreator;
 import ua.com.integer.gdx.xml.ui.creator.imp.SimpleXUICreator;
 
 public abstract class XUICreator {
@@ -18,7 +17,7 @@ public abstract class XUICreator {
 	public static void init() {
 		creators.clear();
 
-		register("linkedActor", new LinkedXUICreator());
+		//register("linkedActor", new LinkedXUICreator());
 		register("actor", new SimpleXUICreator());
 		register("group", new GroupCreator());
 		register("image", new ImageCreator());
@@ -38,7 +37,9 @@ public abstract class XUICreator {
 		if (creator != null) {
 			creator.element = element;
 			replaceVariables(element);
-			return creator.create(name);
+			Actor result = creator.create(name);
+			result.setUserObject(element);
+			return result;
 		}
 		return null;
 	}

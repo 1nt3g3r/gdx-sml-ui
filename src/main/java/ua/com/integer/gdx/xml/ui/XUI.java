@@ -8,6 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ObjectMap;
 
 import ua.com.integer.gdx.xml.ui.creator.XUICreator;
@@ -58,7 +59,40 @@ public class XUI {
 
     private void loadDef(String name) {
         XUIElement def = XUIElement.load(Gdx.files.internal(workingDirectory + "/" + name + ".xml"));
+        unwrapLinkedActors(def);
+        applyDeepProperties(def);
         defs.put(name, def);
+    }
+
+    private void unwrapLinkedActors(XUIElement def) {
+        if (def.name.equals("linkedActor")) {
+            XUIElement linked = get(def.attributes.get("path"));
+            def.attributes.remove("path");
+
+            ObjectMap<String, String> originalAttributes = new ObjectMap<>(def.attributes);
+
+            def.name = linked.name;
+            def.attributes.putAll(linked.attributes);
+            def.attributes.putAll(originalAttributes);
+
+            def.children.addAll(linked.children);
+        }
+
+        for(XUIElement child: def.children) {
+            unwrapLinkedActors(child);
+        }
+    }
+
+    private void applyDeepProperties(XUIElement def) {
+        for(String attributeName: def.attributes.keys()) {
+            if (attributeName.contains(".")) {
+                def.setAttribute(attributeName, def.attributes.get(attributeName));
+            }
+        }
+
+        for(XUIElement child : def.children) {
+            applyDeepProperties(child);
+        }
     }
 
     public static final XUIAssets getAssets() {

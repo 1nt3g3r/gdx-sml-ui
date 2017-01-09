@@ -32,5 +32,9 @@ public class LabelProcessor extends XUIProcessor {
         if (hasValue("fontColor")) {
             l.getStyle().fontColor = getColor("fontColor");
         }
+
+        if (hasValue("wrap")) {
+            l.setWrap(bool("wrap"));
+        }
     }
 }
