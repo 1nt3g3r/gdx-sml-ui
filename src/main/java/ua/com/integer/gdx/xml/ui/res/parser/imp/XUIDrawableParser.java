@@ -8,6 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.XmlReader;
 
 import ua.com.integer.gdx.xml.ui.res.XUIAssets;
+import ua.com.integer.gdx.xml.ui.res.XUIAssetsAccess;
 import ua.com.integer.gdx.xml.ui.res.parser.XUIAssetParser;
 
 public class XUIDrawableParser implements XUIAssetParser {
@@ -15,7 +16,7 @@ public class XUIDrawableParser implements XUIAssetParser {
     public void parse(XmlReader.Element element, XUIAssets assets) {
         String drawableName = element.getAttribute("name", "drawable");
         String type = element.getAttribute("type", "region");
-        TextureRegion region = assets.getAsset(element.getAttribute("region", "null"), TextureRegion.class);
+        TextureRegion region = XUIAssetsAccess.getTextureRegion(element.getAttribute("region"));
 
         if (type.equals("region")) {
             assets.putAsset(drawableName, new TextureRegionDrawable(region), Drawable.class);

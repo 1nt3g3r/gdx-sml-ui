@@ -1,122 +1,139 @@
 package ua.com.integer.gdx.xml.ui;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.g2d.NinePatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
-import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ObjectMap;
 
-import ua.com.integer.gdx.xml.ui.creator.XUICreator;
+import ua.com.integer.gdx.xml.ui.creator.*;
+import ua.com.integer.gdx.xml.ui.element.XUIElement;
+import ua.com.integer.gdx.xml.ui.element.XUIElementInflater;
+import ua.com.integer.gdx.xml.ui.element.XUIElementLoader;
 import ua.com.integer.gdx.xml.ui.res.XUIAssets;
 import ua.com.integer.gdx.xml.ui.res.XUIVariables;
-import ua.com.integer.gdx.xml.ui.setup.XUIProcessor;
+import ua.com.integer.gdx.xml.ui.processor.XUIProcessor;
+import ua.com.integer.gdx.xml.ui.util.XUIElementUnwrapper;
 
+/**
+ * Facade to convenient work
+ */
 public class XUI {
     private static final XUI instance = new XUI();
 
-    private String workingDirectory = "xui";
-    private ObjectMap<String, XUIElement> defs = new ObjectMap<>();
+    private static String workingDirectory = "xui";
+    private ObjectMap<String, XUIElement> elements = new ObjectMap<>();
 
     private XUIVariables variables = new XUIVariables();
 
     private XUIAssets assets;
 
-    public static XUI getInstance() {
-        return instance;
-    }
-
     private XUI() {
     }
 
-    public static void setWorkingDirectory(String workingDirectory) {
-        getInstance().workingDirectory = workingDirectory;
-    }
-
-    public static String getWorkingDirectory() {
-        return getInstance().workingDirectory;
-    }
-
-    public static XUIElement get(String name) {
-        if (!getInstance().defs.containsKey(name)) {
-            getInstance().loadDef(name);
-        }
-
-        return getInstance().defs.get(name).copy();
-    }
-
-    public static void inflate(String name, Group group) {
-        getInstance().get(name).inflate(group);
-    }
-
-    public static void inflate(String name, Stage stage) {
-        getInstance().get(name).inflate(stage);
-    }
-
-    private void loadDef(String name) {
-        XUIElement def = XUIElement.load(Gdx.files.internal(workingDirectory + "/" + name + ".xml"));
-        unwrapLinkedActors(def);
-        applyDeepProperties(def);
-        defs.put(name, def);
-    }
-
-    private void unwrapLinkedActors(XUIElement def) {
-        if (def.name.equals("linkedActor")) {
-            XUIElement linked = get(def.attributes.get("path"));
-            def.attributes.remove("path");
-
-            ObjectMap<String, String> originalAttributes = new ObjectMap<>(def.attributes);
-
-            def.name = linked.name;
-            def.attributes.putAll(linked.attributes);
-            def.attributes.putAll(originalAttributes);
-
-            def.children.addAll(linked.children);
-        }
-
-        for(XUIElement child: def.children) {
-            unwrapLinkedActors(child);
-        }
-    }
-
-    private void applyDeepProperties(XUIElement def) {
-        for(String attributeName: def.attributes.keys()) {
-            if (attributeName.contains(".")) {
-                def.setAttribute(attributeName, def.attributes.get(attributeName));
-            }
-        }
-
-        for(XUIElement child : def.children) {
-            applyDeepProperties(child);
-        }
-    }
-
-    public static final XUIAssets getAssets() {
-        return getInstance().assets;
-    }
-
-    public static void registerXUICreator(String name, XUICreator creator) {
-        XUICreator.register(name, creator);
-    }
-
-    public static void registerXUIProcessor(String name, XUIProcessor processor) {
-        XUIProcessor.registerProcessor(name, processor);
-    }
-
+    /**
+     * Call this method first to init XUI
+     */
     public static void init() {
         variables().clear();
         XUICreator.init();
         XUIProcessor.init();
 
-        getInstance().assets = new XUIAssets();
-        getInstance().defs.clear();
+        instance.assets = new XUIAssets();
+        instance.elements.clear();
     }
 
+    /**
+     * Sets directory with element definition files
+     */
+    public static void setWorkingDirectory(String workingDir) {
+        workingDirectory = workingDir;
+    }
+
+    /**
+     * Returns directory with element definition files
+     * @return
+     */
+    public static String getWorkingDirectory() {
+        return workingDirectory;
+    }
+
+    /**
+     * Loads and returns {@link XUIElement} from internal {@link com.badlogic.gdx.files.FileHandle} that located in working directory
+     * @param name should be without .xml suffix
+     */
+    public static XUIElement get(String name) {
+        checkIsInitialized();
+
+        if (!instance.elements.containsKey(name)) {
+            instance.loadElement(name);
+        }
+
+        return instance.elements.get(name).copy();
+    }
+
+    /**
+     * Inflates element with given name into group
+     * @param name should be without .xml suffix
+     */
+    public static void inflate(String name, Group group) {
+        checkIsInitialized();
+
+        XUIElement element = instance.get(name);
+        XUIElementInflater.inflate(element, group);
+    }
+
+    /**
+     * Inflates element with given name into stage
+     * @param name should be without .xml suffix
+     */
+    public static void inflate(String name, Stage stage) {
+        checkIsInitialized();
+
+        XUIElement element = instance.get(name);
+        XUIElementInflater.inflate(element, stage);
+    }
+
+    private void loadElement(String name) {
+        XUIElement def = XUIElementLoader.load(Gdx.files.internal(workingDirectory + "/" + name + ".xml"));
+        XUIElementUnwrapper.process(def);
+        elements.put(name, def);
+    }
+
+    /**
+     * Provides convenient access to {@link XUIAssets}
+     */
+    public static final XUIAssets assets() {
+        checkIsInitialized();
+        return instance.assets;
+    }
+
+    /**
+     * Provides convenient access to {@link XUIVariables}
+     */
     public static XUIVariables variables() {
-        return getInstance().variables;
+        checkIsInitialized();
+        return instance.variables;
+    }
+
+    /**
+     * Register {@link XUICreator} for given actor type.
+     */
+    public static void registerXUICreator(String type, XUICreator creator) {
+        checkIsInitialized();
+        XUICreator.register(type, creator);
+    }
+
+    /**
+     * Register list of {@link XUIProcessor} for given actor type
+     */
+    public static void registerXUIProcessors(String type, XUIProcessor... processors) {
+        checkIsInitialized();
+        XUIProcessor.registerProcessors(type, processors);
+    }
+
+    private static void checkIsInitialized() {
+        if (instance == null) {
+            throw new IllegalStateException("Call XUI.init() before any usage");
+        }
     }
 }

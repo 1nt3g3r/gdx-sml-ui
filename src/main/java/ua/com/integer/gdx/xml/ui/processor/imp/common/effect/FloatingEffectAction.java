@@ -1,4 +1,4 @@
-package ua.com.integer.gdx.xml.ui.setup.imp.common.effect;
+package ua.com.integer.gdx.xml.ui.processor.imp.common.effect;
 
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.Actor;

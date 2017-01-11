@@ -1,16 +1,14 @@
-package ua.com.integer.gdx.xml.ui.setup.imp;
+package ua.com.integer.gdx.xml.ui.processor.imp;
 
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 
-import ua.com.integer.gdx.xml.ui.setup.XUIProcessor;
-
-public class LabelProcessor extends XUIProcessor {
+public class LabelProcessor extends ua.com.integer.gdx.xml.ui.processor.XUIProcessor {
     @Override
-    public void setup() {
-        Label l = (Label) XUIElement.getActor();
+    public void process() {
+        Label l = (Label) element.resultActor;
 
         if (hasValue("text")) {
-            l.setText(getValue("text"));
+            l.setText(getAttribute("text"));
         }
 
         if (hasValue("align")) {

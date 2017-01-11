@@ -1,13 +1,13 @@
-package ua.com.integer.gdx.xml.ui.setup.imp.common;
+package ua.com.integer.gdx.xml.ui.processor.imp.common;
 
 import com.badlogic.gdx.scenes.scene2d.Actor;
 
-import ua.com.integer.gdx.xml.ui.setup.XUIProcessor;
+import ua.com.integer.gdx.xml.ui.processor.XUIProcessor;
 
 public class TransformProcessor extends XUIProcessor {
     @Override
-    public void setup() {
-        Actor a = XUIElement.getActor();
+    public void process() {
+        Actor a = element.resultActor;
 
         if (hasValue("width")) {
             a.setWidth(eval("width"));
@@ -68,13 +68,13 @@ public class TransformProcessor extends XUIProcessor {
     }
 
     private void setupPosition() {
-        Actor a = XUIElement.getActor();
+        Actor a = element.resultActor;
 
         if (!a.hasParent()) {
             return;
         }
 
-        String[] parts = getValue("position").replace(" ", "").split("\\|");
+        String[] parts = getAttribute("position").replace(" ", "").split("\\|");
         float x = a.getX();
         float y = a.getY();
         for(String part : parts) {
@@ -91,6 +91,11 @@ public class TransformProcessor extends XUIProcessor {
             } else if (part.equals("top")) {
                 y = a.getParent().getHeight() - a.getHeight();
             } else if (part.equals("centerVertical")) {
+                y = (a.getParent().getHeight() - a.getHeight())/2f;
+            }
+
+            if (part.equals("center")) {
+                x = (a.getParent().getWidth() - a.getWidth())/2f;
                 y = (a.getParent().getHeight() - a.getHeight())/2f;
             }
         }

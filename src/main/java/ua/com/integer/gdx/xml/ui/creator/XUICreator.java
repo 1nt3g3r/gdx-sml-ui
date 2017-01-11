@@ -4,12 +4,12 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ObjectMap;
 
-import ua.com.integer.gdx.xml.ui.XUI;
-import ua.com.integer.gdx.xml.ui.XUIElement;
 import ua.com.integer.gdx.xml.ui.creator.imp.GroupCreator;
 import ua.com.integer.gdx.xml.ui.creator.imp.ImageCreator;
 import ua.com.integer.gdx.xml.ui.creator.imp.LabelCreator;
 import ua.com.integer.gdx.xml.ui.creator.imp.SimpleXUICreator;
+import ua.com.integer.gdx.xml.ui.element.XUIElement;
+import ua.com.integer.gdx.xml.ui.res.XUIAssetsAccess;
 
 public abstract class XUICreator {
 	private static ObjectMap<String, XUICreator> creators = new ObjectMap<String, XUICreator>();
@@ -69,7 +69,7 @@ public abstract class XUICreator {
 		}
 
 		for(String var : tmpArray) {
-			String varValue = XUI.getAssets().getAsset(var, String.class);
+			String varValue = XUIAssetsAccess.getVariable(var);
 			value = value.replace("$" + var + "$", varValue);
 		}
 

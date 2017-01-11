@@ -1,16 +1,16 @@
-package ua.com.integer.gdx.xml.ui.setup.imp.common;
+package ua.com.integer.gdx.xml.ui.processor.imp.common;
 
 import com.badlogic.gdx.scenes.scene2d.Actor;
 
-import ua.com.integer.gdx.xml.ui.setup.XUIProcessor;
+import ua.com.integer.gdx.xml.ui.processor.XUIProcessor;
 
 public class CommonPropertiesProcessor extends XUIProcessor {
     @Override
-    public void setup() {
-        Actor a = XUIElement.getActor();
+    public void process() {
+        Actor a = element.resultActor;
 
         if (hasValue("name")) {
-            a.setName(getValue("name"));
+            a.setName(getAttribute("name"));
         }
 
         if (hasValue("debug")) {

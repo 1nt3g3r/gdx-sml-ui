@@ -1,19 +1,19 @@
-package ua.com.integer.gdx.xml.ui.setup.imp.common;
+package ua.com.integer.gdx.xml.ui.processor.imp.common;
 
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.I18NBundle;
 
 import ua.com.integer.gdx.xml.ui.XUI;
-import ua.com.integer.gdx.xml.ui.setup.XUIProcessor;
+import ua.com.integer.gdx.xml.ui.processor.XUIProcessor;
 
 public class LocalizeProcessor extends XUIProcessor {
     @Override
-    public void setup() {
-        for(String key : XUIElement.attributes.keys()) {
-            String value = XUIElement.attributes.get(key);
+    public void process() {
+        for(String key : element.attributes.keys()) {
+            String value = element.attributes.get(key);
 
             if (value.contains("@")) {
-                XUIElement.attributes.put(key, applyLocalization(value));
+                element.attributes.put(key, applyLocalization(value));
             }
         }
     }
@@ -41,7 +41,7 @@ public class LocalizeProcessor extends XUIProcessor {
                 key = parts[1];
             }
 
-            I18NBundle bundle1 = XUI.getAssets().getAsset(bundleName, I18NBundle.class);
+            I18NBundle bundle1 = XUI.assets().getAsset(bundleName, I18NBundle.class);
             String varValue = bundle1.get(key);
             value = value.replace("@" + var + "@", varValue);
         }

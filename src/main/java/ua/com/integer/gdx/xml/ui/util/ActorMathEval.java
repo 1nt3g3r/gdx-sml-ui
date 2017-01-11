@@ -1,26 +1,12 @@
-package ua.com.integer.gdx.xml.ui.eval;
+package ua.com.integer.gdx.xml.ui.util;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.OrderedMap;
 
-public class Eval {
+public class ActorMathEval {
 	private static MathEval eval = new MathEval();
 	private static OrderedMap<String, String> userVariables = new OrderedMap<String, String>();
-	
-	public static MathEval getEvalEngine() {
-		return eval;
-	}
-	
-	public static void setVars(OrderedMap<String, String> variables) {
-		for(String key: variables.keys()) {
-			userVariables.put(key, variables.get(key));
-		}
-	}
-	
-	public static void setVar(String name, float value) {
-		setVar(name, Float.toString(value));
-	}
 	
 	public static void setVar(String name, String value) {
 		userVariables.put(name, value);

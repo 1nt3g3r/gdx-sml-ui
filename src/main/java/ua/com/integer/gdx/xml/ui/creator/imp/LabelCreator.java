@@ -12,7 +12,7 @@ public class LabelCreator extends XUICreator {
     @Override
     protected Actor create(String packageName) {
         String fontName = element.attributes.get("font");
-        BitmapFont font = XUI.getAssets().getAsset(fontName, BitmapFont.class);
+        BitmapFont font = XUI.assets().getAsset(fontName, BitmapFont.class);
         return new Label("", new Label.LabelStyle(font, Color.WHITE));
     }
 }
