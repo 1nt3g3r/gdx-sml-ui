@@ -11,6 +11,16 @@ import ua.com.integer.gdx.xml.ui.res.parser.imp.XUIColorParser;
 import ua.com.integer.gdx.xml.ui.res.parser.imp.XUIDrawableParser;
 import ua.com.integer.gdx.xml.ui.res.parser.imp.XUIVariableParser;
 
+/**
+ * This class holds assets needed for create/setup actors from {@link ua.com.integer.gdx.xml.ui.element.XUIElement}.
+ * For example, if we setup {@link com.badlogic.gdx.scenes.scene2d.ui.Image} we need some {@link com.badlogic.gdx.graphics.g2d.TextureRegion} or
+ * {@link com.badlogic.gdx.scenes.scene2d.utils.Drawable}. So this class provide it
+ *
+ * This class is just proxy that called {@link AssetProvider} to get some resources. It mean you should implement your own set of
+ * {@link AssetProvider} and pass it there.
+ *
+ * Also this class can parse user-predefined assets (like Colors, Variables, NinePatch Drawables) from external files. Look more for {@link XUIAssetParser}
+ */
 public class XUIAssets {
     private ObjectMap<Class, AssetProvider> assetProviders = new ObjectMap<>();
     private ObjectMap<Object, ObjectMap<String, Object>> resources = new ObjectMap<>();

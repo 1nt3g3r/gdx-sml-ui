@@ -6,13 +6,19 @@ import ua.com.integer.gdx.xml.ui.XUI;
 import ua.com.integer.gdx.xml.ui.element.XUIElement;
 
 /**
- * Element can be complex thing that includes links to another elements (defined in another files).
- * We should "unwrap" it before we can use it
+ * Some elements can contain links to another elements that are defined in another files. This linking
+ * can be nested. We should "unwrap" all these elements before we can use it
  */
 public class XUIElementUnwrapper {
+    /**
+     * Type (tag name) for linked actors
+     */
     public static final String LINKED_ACTOR_TYPE = "linkedActor";
 
-    public static void process(XUIElement element) {
+    /**
+     * Performs unwrapping of all linked elements
+     */
+    public static void unwrap(XUIElement element) {
         unwrapLinkedActors(element);
         applyDeepAttributes(element);
     }

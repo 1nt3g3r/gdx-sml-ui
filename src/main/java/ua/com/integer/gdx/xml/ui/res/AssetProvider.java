@@ -1,7 +1,11 @@
 package ua.com.integer.gdx.xml.ui.res;
 
-import com.badlogic.gdx.scenes.scene2d.Actor;
-
+/**
+ * Provides access to asset by his name
+ */
 public interface AssetProvider {
-    public Object getAsset(String name);
+    /**
+     * Returns asset by his name
+     */
+    Object getAsset(String name);
 }

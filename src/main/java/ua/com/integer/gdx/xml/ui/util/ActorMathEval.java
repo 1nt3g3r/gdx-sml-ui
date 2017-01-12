@@ -4,14 +4,37 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.OrderedMap;
 
+/**
+ * Provides the ability to evaluate a String math expression.
+ * User can provide his own variables.
+ *
+ * Some variables are already predefined:
+ *
+ * <b>screenWidth</b> - Gdx.graphics.getWidth()
+ * <b>screenHeight</b> - Gdx.graphics.getHeight()
+ *
+ * <b>width</b> - width of actor
+ * <b>height</b> - height of actor
+ *
+ * <b>parentWidth</b> - width of parent actor group
+ * <b>parentHeight</b> - height of parent actor group
+ */
 public class ActorMathEval {
-	private static MathEval eval = new MathEval();
+	private static ua.com.integer.gdx.xml.ui.util.eval.MathEval eval = new ua.com.integer.gdx.xml.ui.util.eval.MathEval();
 	private static OrderedMap<String, String> userVariables = new OrderedMap<String, String>();
-	
+
+    /**
+     * Set user variable.
+     * @param name of variable
+     * @param value of variable. Can be expression and include another variables
+     */
 	public static void setVar(String name, String value) {
 		userVariables.put(name, value);
 	}
-	
+
+    /**
+     * Calculates expression for given actor
+     */
 	public static float eval(Actor actor, String expression) {
 		if (actor != null) {
 			eval.setVariable("width", actor.getWidth());
@@ -31,12 +54,10 @@ public class ActorMathEval {
 		eval.setVariable("screenWidth", Gdx.graphics.getWidth());
 		eval.setVariable("screenHeight", Gdx.graphics.getHeight());
 		
-		if (userVariables != null) {
-			for(String key : userVariables.keys()) {
-				eval.setVariable(key, eval.evaluate(userVariables.get(key)));
-			}
-		}
-		
+        for(String key : userVariables.keys()) {
+            eval.setVariable(key, eval.evaluate(userVariables.get(key)));
+        }
+
 		return eval.evaluate(expression);
 	}
 }

@@ -9,9 +9,11 @@ import ua.com.integer.gdx.xml.ui.creator.*;
 import ua.com.integer.gdx.xml.ui.element.XUIElement;
 import ua.com.integer.gdx.xml.ui.element.XUIElementInflater;
 import ua.com.integer.gdx.xml.ui.element.XUIElementLoader;
+import ua.com.integer.gdx.xml.ui.res.AssetProvider;
 import ua.com.integer.gdx.xml.ui.res.XUIAssets;
 import ua.com.integer.gdx.xml.ui.res.XUIVariables;
 import ua.com.integer.gdx.xml.ui.processor.XUIProcessor;
+import ua.com.integer.gdx.xml.ui.res.parser.XUIAssetParser;
 import ua.com.integer.gdx.xml.ui.util.XUIElementUnwrapper;
 
 /**
@@ -95,7 +97,7 @@ public class XUI {
 
     private void loadElement(String name) {
         XUIElement def = XUIElementLoader.load(Gdx.files.internal(workingDirectory + "/" + name + ".xml"));
-        XUIElementUnwrapper.process(def);
+        XUIElementUnwrapper.unwrap(def);
         elements.put(name, def);
     }
 
@@ -129,6 +131,22 @@ public class XUI {
     public static void registerXUIProcessors(String type, XUIProcessor... processors) {
         checkIsInitialized();
         XUIProcessor.registerProcessors(type, processors);
+    }
+
+    /**
+     * Register {@link AssetProvider} to provide asset of <b>assetType</b>
+     */
+    public static void registerXUIAssetProvider(Class<? extends Object> assetType, AssetProvider assetProvider) {
+        checkIsInitialized();
+        assets().registerAssetProvider(assetType, assetProvider);
+    }
+
+    /**
+     * Register {@link XUIAssetParser} to add ability to parse assets of <b>assetType</b> type
+     */
+    public static void registerXUIAssetParser(String assetType, XUIAssetParser assetParser) {
+        checkIsInitialized();
+        assets().registerAssetParser(assetType, assetParser);
     }
 
     private static void checkIsInitialized() {
