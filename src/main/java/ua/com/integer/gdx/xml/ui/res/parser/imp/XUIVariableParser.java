@@ -6,6 +6,9 @@ import ua.com.integer.gdx.xml.ui.util.ActorMathEval;
 import ua.com.integer.gdx.xml.ui.res.XUIAssets;
 import ua.com.integer.gdx.xml.ui.res.parser.XUIAssetParser;
 
+/**
+ * Parse variables from XML and stores them in {@link ActorMathEval}
+ */
 public class XUIVariableParser implements XUIAssetParser {
     @Override
     public void parse(XmlReader.Element element, XUIAssets assets) {

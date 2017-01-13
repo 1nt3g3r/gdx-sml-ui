@@ -4,9 +4,12 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 
 import ua.com.integer.gdx.xml.ui.creator.XUICreator;
 
-public class SimpleXUICreator extends XUICreator {
+/**
+ * Creates new {@link Actor} with <b>Actor</b> name
+ */
+public class ActorCreator extends XUICreator {
 	@Override
-	public Actor create(String packageName) {
+	public Actor create(String type) {
 		Actor result = new Actor();
 		result.setName("Actor");
 		return result;

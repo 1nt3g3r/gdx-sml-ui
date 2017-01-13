@@ -11,6 +11,11 @@ import ua.com.integer.gdx.xml.ui.res.XUIAssets;
 import ua.com.integer.gdx.xml.ui.res.XUIAssetsAccess;
 import ua.com.integer.gdx.xml.ui.res.parser.XUIAssetParser;
 
+/**
+ * Parse drawables from XML.
+ *
+ * It is possible to parse {@link TextureRegionDrawable} or {@link NinePatchDrawable}
+ */
 public class XUIDrawableParser implements XUIAssetParser {
     @Override
     public void parse(XmlReader.Element element, XUIAssets assets) {

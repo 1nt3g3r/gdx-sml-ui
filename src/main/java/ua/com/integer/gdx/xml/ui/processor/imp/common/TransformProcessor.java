@@ -4,65 +4,68 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 
 import ua.com.integer.gdx.xml.ui.processor.XUIProcessor;
 
+/**
+ * Setup transform (position and size) for actor.
+ */
 public class TransformProcessor extends XUIProcessor {
     @Override
     public void process() {
         Actor a = element.resultActor;
 
-        if (hasValue("width")) {
+        if (hasAttribute("width")) {
             a.setWidth(eval("width"));
         }
 
-        if (hasValue("height")) {
+        if (hasAttribute("height")) {
             a.setHeight(eval("height"));
         }
 
-        if (hasValue("size")) {
+        if (hasAttribute("size")) {
             float size = eval("size");
             a.setSize(size, size);
         }
 
-        if (hasValue("x")) {
+        if (hasAttribute("x")) {
             a.setX(eval("x"));
         }
 
-        if (hasValue("y")) {
+        if (hasAttribute("y")) {
             a.setY(eval("y"));
         }
 
-        if (hasValue("scaleX")) {
+        if (hasAttribute("scaleX")) {
             a.setScaleX(eval("scaleX"));
         }
 
-        if (hasValue("scaleY")) {
+        if (hasAttribute("scaleY")) {
             a.setScaleY(eval("scaleY"));
         }
 
-        if (hasValue("scale")) {
+        if (hasAttribute("scale")) {
             a.setScale(eval("scale"));
         }
 
-        if (hasValue("rotation")) {
+        if (hasAttribute("rotation")) {
             a.setRotation(eval("rotation"));
         }
 
-        if (hasValue("originX")) {
+        if (hasAttribute("originX")) {
             a.setOriginX(eval("originX"));
         }
 
-        if (hasValue("originY")) {
+        if (hasAttribute("originY")) {
             a.setOriginY(eval("originY"));
         }
 
-        if (hasValue("origin")) {
+        if (hasAttribute("origin")) {
             a.setOrigin(getAlign("origin"));
         }
 
-        if (hasValue("alignPos")) {
+        if (hasAttribute("alignPos")) {
             a.setPosition(a.getX(), a.getY(), getAlign("alignPos"));
         }
 
-        if (hasValue("position")) {
+        if (hasAttribute("position")) {
             setupPosition();
         }
     }

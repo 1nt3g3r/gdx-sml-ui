@@ -6,6 +6,9 @@ import com.badlogic.gdx.utils.I18NBundle;
 import ua.com.integer.gdx.xml.ui.XUI;
 import ua.com.integer.gdx.xml.ui.processor.XUIProcessor;
 
+/**
+ * Some attributes can have localize tags (like @localizeTag@). That strings will be replaced by localized values using {@link ua.com.integer.gdx.xml.ui.res.XUIAssetsAccess#getI18NBundle(String)}
+ */
 public class LocalizeProcessor extends XUIProcessor {
     @Override
     public void process() {

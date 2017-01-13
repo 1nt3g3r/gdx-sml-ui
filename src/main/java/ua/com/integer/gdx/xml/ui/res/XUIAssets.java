@@ -27,10 +27,16 @@ public class XUIAssets {
 
     private ObjectMap<String, XUIAssetParser> assetParsers = new ObjectMap<>();
 
+    /**
+     * Initialize class and loads default set of {@link XUIAssetParser}
+     */
     public XUIAssets() {
         registerDefaultAssetParsers();
     }
 
+    /**
+     * Search and load for file <b>assets.xml</b> in internal {@link XUI#getWorkingDirectory()}
+     */
     public void loadDefaultAssets() {
         String path = XUI.getWorkingDirectory() + "/assets.xml";
         FileHandle assetFileHandle = Gdx.files.internal(path);
@@ -45,14 +51,23 @@ public class XUIAssets {
         registerAssetParser("var", new XUIVariableParser());
     }
 
-    public void registerAssetParser(String name, XUIAssetParser parser) {
-        assetParsers.put(name, parser);
+    /**
+     * Register asset parser for given asset type
+     */
+    public void registerAssetParser(String assetType, XUIAssetParser parser) {
+        assetParsers.put(assetType, parser);
     }
 
+    /**
+     * Parse assets from given XML {@link FileHandle}
+     */
     public void parseAssets(FileHandle fileHandle) {
         parseAssets(fileHandle.readString("UTF-8"));
     }
 
+    /**
+     * Parse assets from given XML string
+     */
     public void parseAssets(String xmlAssets) {
         XmlReader.Element root = new XmlReader().parse(xmlAssets);
         for(int i = 0; i < root.getChildCount(); i++) {
@@ -67,6 +82,15 @@ public class XUIAssets {
         }
     }
 
+    /**
+     * Add asset with given name.
+     *
+     * For example, if you want add some {@link com.badlogic.gdx.graphics.Texture} with name <b>texture</b> you should call it in next way:
+     * putAsset("texture", yourTexture, Texture.class)
+     * @param name name of asset
+     * @param asset asset
+     * @param cl class of asset
+     */
     public void putAsset(String name, Object asset, Class cl) {
         getResourceMap(cl).put(name, asset);
     }
@@ -78,18 +102,29 @@ public class XUIAssets {
         return resources.get(resourceClass);
     }
 
-    public <T extends Object> T getAsset(String name, Class assetClass) {
-        ObjectMap<String, Object> resMap = getResourceMap(assetClass);
+    /**
+     * Returns asset by his name and type
+     *
+     * @param name assetName
+     * @param assetClassType assetType
+     */
+    public <T extends Object> T getAsset(String name, Class assetClassType) {
+        ObjectMap<String, Object> resMap = getResourceMap(assetClassType);
         if (resMap.containsKey(name)) {
             return (T) resMap.get(name);
         }
-        if (!assetProviders.containsKey(assetClass)) {
+        if (!assetProviders.containsKey(assetClassType)) {
             return null;
         }
-        return (T) assetProviders.get(assetClass).getAsset(name);
+        return (T) assetProviders.get(assetClassType).getAsset(name);
     }
 
-    public void registerAssetProvider(Class cl, AssetProvider assetProvider) {
-        assetProviders.put(cl, assetProvider);
+    /**
+     * Registers {@link AssetProvider} for given asset type
+     * @param assetType type of asset (examples - Texture, TextureRegion, BitmapFont)
+     * @param assetProvider implementation of {@link AssetProvider} that can return asset of needed type by his name
+     */
+    public void registerAssetProvider(Class assetType, AssetProvider assetProvider) {
+        assetProviders.put(assetType, assetProvider);
     }
 }

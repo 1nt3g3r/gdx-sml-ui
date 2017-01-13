@@ -6,6 +6,11 @@ import com.badlogic.gdx.utils.XmlReader;
 import ua.com.integer.gdx.xml.ui.res.XUIAssets;
 import ua.com.integer.gdx.xml.ui.res.parser.XUIAssetParser;
 
+/**
+ * Parse {@link Color} from XML.
+ *
+ * Also this class registers all default colors defined as constants in {@link Color} (RED, BLUE, etc)
+ */
 public class XUIColorParser implements XUIAssetParser {
     private XUIAssets assets;
 

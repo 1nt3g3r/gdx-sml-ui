@@ -4,40 +4,43 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 
 import ua.com.integer.gdx.xml.ui.processor.XUIProcessor;
 
+/**
+ * Apply common for all actors properties. It's properties <b>name</b>, <b>visible</b>
+ */
 public class CommonPropertiesProcessor extends XUIProcessor {
     @Override
     public void process() {
         Actor a = element.resultActor;
 
-        if (hasValue("name")) {
+        if (hasAttribute("name")) {
             a.setName(getAttribute("name"));
         }
 
-        if (hasValue("debug")) {
+        if (hasAttribute("debug")) {
             a.setDebug(bool("debug"));
         }
 
-        if (hasValue("touchable")) {
+        if (hasAttribute("touchable")) {
             a.setTouchable(touchable("touchable"));
         }
 
-        if (hasValue("visible")) {
+        if (hasAttribute("visible")) {
             a.setVisible(bool("visible"));
         }
 
-        if (hasValue("color")) {
+        if (hasAttribute("color")) {
             a.setColor(getColor("color"));
         }
 
-        if (hasValue("toBack")) {
+        if (hasAttribute("toBack")) {
             a.toBack();
         }
 
-        if (hasValue("toFront")) {
+        if (hasAttribute("toFront")) {
             a.toFront();
         }
 
-        if (hasValue("zIndex")) {
+        if (hasAttribute("zIndex")) {
             a.setZIndex(getInt("zIndex"));
         }
     }
