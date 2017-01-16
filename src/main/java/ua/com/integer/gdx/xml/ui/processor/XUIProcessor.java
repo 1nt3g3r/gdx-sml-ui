@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
+import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ObjectMap;
@@ -14,6 +15,7 @@ import ua.com.integer.gdx.xml.ui.element.XUIElement;
 import ua.com.integer.gdx.xml.ui.processor.imp.GroupProcessor;
 import ua.com.integer.gdx.xml.ui.processor.imp.ImageProcessor;
 import ua.com.integer.gdx.xml.ui.processor.imp.LabelProcessor;
+import ua.com.integer.gdx.xml.ui.processor.imp.SliderProcessor;
 import ua.com.integer.gdx.xml.ui.processor.imp.common.CommonPropertiesProcessor;
 import ua.com.integer.gdx.xml.ui.processor.imp.common.LocalizeProcessor;
 import ua.com.integer.gdx.xml.ui.processor.imp.common.TransformProcessor;
@@ -40,6 +42,7 @@ public abstract class XUIProcessor {
         registerProcessors("image", new ImageProcessor());
         registerProcessors("group", new GroupProcessor());
         registerProcessors("label", new LabelProcessor());
+        registerProcessors("slider", new SliderProcessor());
     }
 
     /**
@@ -101,6 +104,20 @@ public abstract class XUIProcessor {
      */
     public TextureRegion getRegion(String name) {
         return XUIAssetsAccess.getTextureRegion(getAttribute(name));
+    }
+
+    /**
+     * Convenient method to get {@link Drawable} by attributeName
+     */
+    public Drawable getDrawable(String name) {
+       return XUIAssetsAccess.getDrawable(getAttribute(name));
+    }
+
+    /**
+     * Convenient method to get copy of {@link Drawable} by attributeName
+     */
+    public Drawable getDrawableCopy(String name) {
+        return XUIAssetsAccess.getDrawableCopy(getAttribute(name));
     }
 
     /**

@@ -8,6 +8,7 @@ import ua.com.integer.gdx.xml.ui.creator.imp.GroupCreator;
 import ua.com.integer.gdx.xml.ui.creator.imp.ImageCreator;
 import ua.com.integer.gdx.xml.ui.creator.imp.LabelCreator;
 import ua.com.integer.gdx.xml.ui.creator.imp.ActorCreator;
+import ua.com.integer.gdx.xml.ui.creator.imp.SliderCreator;
 import ua.com.integer.gdx.xml.ui.element.XUIElement;
 import ua.com.integer.gdx.xml.ui.res.XUIAssetsAccess;
 
@@ -27,6 +28,7 @@ public abstract class XUICreator {
 		register("group", new GroupCreator());
 		register("image", new ImageCreator());
 		register("label", new LabelCreator());
+		register("slider", new SliderCreator());
 	}
 
     /**

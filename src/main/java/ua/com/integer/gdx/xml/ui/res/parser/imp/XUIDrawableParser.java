@@ -26,10 +26,15 @@ public class XUIDrawableParser implements XUIAssetParser {
         if (type.equals("region")) {
             assets.putAsset(drawableName, new TextureRegionDrawable(region), Drawable.class);
         } else if (type.equals("nine-patch")) {
-            int left = Integer.parseInt(element.getAttribute("left", "0"));
-            int right = Integer.parseInt(element.getAttribute("right", "0"));
-            int top = Integer.parseInt(element.getAttribute("top", "0"));
-            int bottom = Integer.parseInt(element.getAttribute("bottom", "0"));
+            int left = 0, right = 0, top = 0, bottom = 0;
+            if (element.getAttributes().containsKey("sideSize")) {
+                left = right = top = bottom = Integer.parseInt(element.getAttribute("sideSize"));
+            } else {
+                left = Integer.parseInt(element.getAttribute("left", "0"));
+                right = Integer.parseInt(element.getAttribute("right", "0"));
+                top = Integer.parseInt(element.getAttribute("top", "0"));
+                bottom = Integer.parseInt(element.getAttribute("bottom", "0"));
+            }
             assets.putAsset(drawableName, new NinePatchDrawable(new NinePatch(region, left, right, top, bottom)), Drawable.class);
         }
     }

@@ -7,6 +7,12 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.utils.BaseDrawable;
+import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
+import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
+import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.scenes.scene2d.utils.TiledDrawable;
 import com.badlogic.gdx.utils.I18NBundle;
 
 import ua.com.integer.gdx.xml.ui.XUI;
@@ -41,6 +47,34 @@ public class XUIAssetsAccess {
         String regionName = parts[1];
 
         return getAtlas(atlasName).findRegion(regionName);
+    }
+
+    /**
+     * Returns drawable by name
+     */
+    public static Drawable getDrawable(String drawableName) {
+        return XUI.assets().getAsset(drawableName, Drawable.class);
+    }
+
+    /**
+     * Returns copy of drawable with given name. So you can modify this copy without affect to original drawabl
+     */
+    public static Drawable getDrawableCopy(String drawableName) {
+        Drawable original = getDrawable(drawableName);
+
+        if (original instanceof TextureRegionDrawable) {
+            return new TextureRegionDrawable((TextureRegionDrawable) original);
+        } else if (original instanceof NinePatchDrawable) {
+            return new NinePatchDrawable((NinePatchDrawable) original);
+        } else if (original instanceof SpriteDrawable) {
+            return new SpriteDrawable((SpriteDrawable) original);
+        } else if (original instanceof TiledDrawable) {
+            return new TiledDrawable((TiledDrawable) original);
+        } else if (original instanceof BaseDrawable) {
+            return new BaseDrawable( original);
+        }
+
+        throw new IllegalStateException("Can't make copy of drawable: " + drawableName);
     }
 
     /**
