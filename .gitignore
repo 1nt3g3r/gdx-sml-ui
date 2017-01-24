@@ -9,3 +9,6 @@ build
 
 #Gradle specific
 .gradle
+
+#Android Studio specific
+*.iml
