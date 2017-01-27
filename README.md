@@ -18,7 +18,7 @@ Provide comfortable way of creating UI using xml files in libgdx
 
 ``` xml
 <!-- Root group. Always fill whole screen -->
-<group
+<Group
     width="screenWidth"
     height="screenHeight"
     debug="true">
@@ -26,13 +26,13 @@ Provide comfortable way of creating UI using xml files in libgdx
     <!-- Child of root group. 
     Size of this child is half of parent size. 
     It always situated in the center of screen -->
-    <group
+    <Group
        width="parentWidth/2"
        height="parentHeight/2"
        position="centerHorizontal | centerVertical"
        debug="true"/>
     
-</group>
+</Group>
 ```
 
 ![Example actor](/docs/images/simple-xui-example.png?raw=true)
