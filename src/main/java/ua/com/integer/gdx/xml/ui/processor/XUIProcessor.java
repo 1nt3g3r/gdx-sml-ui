@@ -3,6 +3,7 @@ package ua.com.integer.gdx.xml.ui.processor;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
@@ -12,10 +13,15 @@ import com.badlogic.gdx.utils.ObjectMap;
 import com.badlogic.gdx.utils.Scaling;
 
 import ua.com.integer.gdx.xml.ui.element.XUIElement;
+import ua.com.integer.gdx.xml.ui.processor.imp.ButtonProcessor;
 import ua.com.integer.gdx.xml.ui.processor.imp.GroupProcessor;
 import ua.com.integer.gdx.xml.ui.processor.imp.ImageProcessor;
 import ua.com.integer.gdx.xml.ui.processor.imp.LabelProcessor;
+import ua.com.integer.gdx.xml.ui.processor.imp.LayoutProcessor;
+import ua.com.integer.gdx.xml.ui.processor.imp.ScrollPaneProcessor;
 import ua.com.integer.gdx.xml.ui.processor.imp.SliderProcessor;
+import ua.com.integer.gdx.xml.ui.processor.imp.TextButtonProcessor;
+import ua.com.integer.gdx.xml.ui.processor.imp.VerticalGroupProcessor;
 import ua.com.integer.gdx.xml.ui.processor.imp.common.CommonPropertiesProcessor;
 import ua.com.integer.gdx.xml.ui.processor.imp.common.LocalizeProcessor;
 import ua.com.integer.gdx.xml.ui.processor.imp.common.TransformProcessor;
@@ -37,12 +43,19 @@ public abstract class XUIProcessor {
     }
 
     private static void registerDefaultProcessors() {
+        GroupProcessor groupProcessor = new GroupProcessor();
+        LayoutProcessor layoutProcessor = new LayoutProcessor();
+
         registerProcessors("common", new LocalizeProcessor(), new TransformProcessor(), new CommonPropertiesProcessor());
 
-        registerProcessors("image", new ImageProcessor());
-        registerProcessors("group", new GroupProcessor());
-        registerProcessors("label", new LabelProcessor());
-        registerProcessors("slider", new SliderProcessor());
+        registerProcessors("Image", new ImageProcessor());
+        registerProcessors("Group", groupProcessor);
+        registerProcessors("Label", new LabelProcessor());
+        registerProcessors("Slider", new SliderProcessor());
+        registerProcessors("VerticalGroup", groupProcessor, layoutProcessor, new VerticalGroupProcessor());
+        registerProcessors("ScrollPane", groupProcessor, layoutProcessor, new ScrollPaneProcessor());
+        registerProcessors("Button", groupProcessor, layoutProcessor, new ButtonProcessor());
+        registerProcessors("TextButton", groupProcessor, layoutProcessor, new TextButtonProcessor());
     }
 
     /**
@@ -77,6 +90,13 @@ public abstract class XUIProcessor {
      * Implementation of processing
      */
     public abstract void process();
+
+    /**
+     * Convenient method to get {@link BitmapFont} by attributeName
+     */
+    public BitmapFont getFont(String attributeName) {
+        return XUIAssetsAccess.getFont(getAttribute(attributeName));
+    }
 
     /**
      * Convenient method to get {@link Sound} by attributeName
@@ -197,7 +217,7 @@ public abstract class XUIProcessor {
     /**
      * Convenient method to get value of attributeName as bool
      */
-    public boolean bool(String name) {
+    public boolean getBoolean(String name) {
         return Boolean.parseBoolean(getAttribute(name));
     }
 
@@ -213,6 +233,45 @@ public abstract class XUIProcessor {
      */
     public String getAttribute(String attributeName) {
         return element.attributes.get(attributeName);
+    }
+
+    /**
+     * Convenient method to setup {@link Drawable} params, like min width, max width
+     */
+    protected void setupDrawableParams(Drawable drawable, String drawableName) {
+        if (drawable == null) {
+            return;
+        }
+
+        String minWidth = drawableName + "MinWidth";
+        if (hasAttribute(minWidth)) {
+            drawable.setMinWidth(eval(minWidth));
+        }
+
+        String minHeight = drawableName + "MinHeight";
+        if (hasAttribute(minHeight)) {
+            drawable.setMinHeight(eval(minHeight));
+        }
+
+        String leftWidth = drawableName + "LeftWidth";
+        if (hasAttribute(leftWidth)) {
+            drawable.setLeftWidth(eval(leftWidth));
+        }
+
+        String rightWidth = drawableName + "RightWidth";
+        if (hasAttribute(rightWidth)) {
+            drawable.setRightWidth(eval(rightWidth));
+        }
+
+        String topHeight = drawableName + "TopHeight";
+        if (hasAttribute(topHeight)) {
+            drawable.setTopHeight(eval(topHeight));
+        }
+
+        String bottomHeight = drawableName + "BottomHeight";
+        if (hasAttribute(bottomHeight)) {
+            drawable.setBottomHeight(eval(bottomHeight));
+        }
     }
 
     /**

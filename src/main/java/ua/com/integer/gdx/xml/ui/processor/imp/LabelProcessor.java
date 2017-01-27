@@ -35,7 +35,7 @@ public class LabelProcessor extends ua.com.integer.gdx.xml.ui.processor.XUIProce
         }
 
         if (hasAttribute("wrap")) {
-            l.setWrap(bool("wrap"));
+            l.setWrap(getBoolean("wrap"));
         }
     }
 }

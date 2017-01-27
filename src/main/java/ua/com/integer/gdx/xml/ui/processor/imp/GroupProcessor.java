@@ -13,10 +13,10 @@ public class GroupProcessor extends XUIProcessor {
         Group group = (Group) element.resultActor;
 
         if (hasAttribute("transform")) {
-            group.setTransform(bool("transform"));
+            group.setTransform(getBoolean("transform"));
         }
 
-        if (hasAttribute("debugAll") && bool("debugAll")) {
+        if (hasAttribute("debugAll") && getBoolean("debugAll")) {
             group.debugAll();
         }
     }

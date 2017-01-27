@@ -13,7 +13,7 @@ public class XUIElementUnwrapper {
     /**
      * Type (tag name) for linked actors
      */
-    public static final String LINKED_ACTOR_TYPE = "linkedActor";
+    public static final String LINKED_ACTOR_TYPE = "LinkedActor";
 
     /**
      * Performs unwrapping of all linked elements

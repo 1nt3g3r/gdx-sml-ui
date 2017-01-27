@@ -15,7 +15,7 @@ public class SliderProcessor extends XUIProcessor {
         style = slider.getStyle();
 
         if (hasAttribute("disabled")) {
-            slider.setDisabled(bool("disabled"));
+            slider.setDisabled(getBoolean("disabled"));
         }
 
         if (hasAttribute("value")) {
@@ -76,34 +76,8 @@ public class SliderProcessor extends XUIProcessor {
                 style.knobOver
         };
 
-        if (hasAttribute("knobMinWidth")) {
-            float width = eval("knobMinWidth");
-            setMinWidth(width, knobs);
-        }
-
-        if (hasAttribute("knobMinHeight")) {
-            float height = eval("knobMinHeight");
-            setMinHeight(height, knobs);
-        }
-
-        if (hasAttribute("knobLeftWidth")) {
-            float width = eval("knobLeftWidth");
-            setLeftWidth(width, knobs);
-        }
-
-        if (hasAttribute("knobRightWidth")) {
-            float width = eval("knobRightWidth");
-            setRightWidth(width, knobs);
-        }
-
-        if (hasAttribute("knobTopHeight")) {
-            float height = eval("knobTopHeight");
-            setTopHeight(height, knobs);
-        }
-
-        if (hasAttribute("knobBottomHeight")) {
-            float height = eval("knobBottomHeight");
-            setBottomHeight(height, knobs);
+        for(int i = 0; i < knobs.length; i++) {
+            setupDrawableParams(knobs[i], "knob");
         }
     }
 
@@ -119,82 +93,8 @@ public class SliderProcessor extends XUIProcessor {
                 style.disabledKnobAfter
         };
 
-        if (hasAttribute("backgroundMinWidth")) {
-            float width = eval("backgroundMinWidth");
-            setMinWidth(width, drawables);
-        }
-
-        if (hasAttribute("backgroundMinHeight")) {
-            float height = eval("backgroundMinHeight");
-            setMinHeight(height, drawables);
-        }
-
-        if (hasAttribute("backgroundLeftWidth")) {
-            float width = eval("backgroundLeftWidth");
-            setLeftWidth(width, drawables);
-        }
-
-        if (hasAttribute("backgroundRightWidth")) {
-            float width = eval("backgroundRightWidth");
-            setRightWidth(width, drawables);
-        }
-
-        if (hasAttribute("backgroundTopHeight")) {
-            float height = eval("backgroundTopHeight");
-            setTopHeight(height, drawables);
-        }
-
-        if (hasAttribute("backgroundBottomHeight")) {
-            float height = eval("backgroundBottomHeight");
-            setBottomHeight(height, drawables);
-        }
-    }
-
-    private void setMinWidth(float width, Drawable ... drawables) {
-        for(Drawable drawable : drawables) {
-            if (drawable != null) {
-                drawable.setMinWidth(width);
-            }
-        }
-    }
-
-    private void setMinHeight(float height, Drawable ... drawables) {
-        for(Drawable drawable : drawables) {
-            if (drawable != null) {
-                drawable.setMinHeight(height);
-            }
-        }
-    }
-
-    private void setLeftWidth(float width, Drawable ... drawables) {
-        for(Drawable drawable : drawables) {
-            if (drawable != null) {
-                drawable.setLeftWidth(width);
-            }
-        }
-    }
-
-    private void setRightWidth(float width, Drawable ... drawables) {
-        for(Drawable drawable : drawables) {
-            if (drawable != null) {
-                drawable.setRightWidth(width);
-            }
-        }
-    }
-
-    private void setTopHeight(float height, Drawable ... drawables) {
-        for(Drawable drawable : drawables) {
-            if (drawable != null) {
-                drawable.setTopHeight(height);
-            }
-        }
-    }
-
-    private void setBottomHeight(float height, Drawable ... drawables) {
-        for(Drawable drawable : drawables) {
-            if (drawable != null) {
-                drawable.setBottomHeight(height);
-            }
+        for(int i = 0; i < drawables.length; i++) {
+            setupDrawableParams(drawables[i], "background");
         }
     }
 }

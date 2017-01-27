@@ -17,7 +17,7 @@ public class CommonPropertiesProcessor extends XUIProcessor {
         }
 
         if (hasAttribute("debug")) {
-            a.setDebug(bool("debug"));
+            a.setDebug(getBoolean("debug"));
         }
 
         if (hasAttribute("touchable")) {
@@ -25,7 +25,7 @@ public class CommonPropertiesProcessor extends XUIProcessor {
         }
 
         if (hasAttribute("visible")) {
-            a.setVisible(bool("visible"));
+            a.setVisible(getBoolean("visible"));
         }
 
         if (hasAttribute("color")) {

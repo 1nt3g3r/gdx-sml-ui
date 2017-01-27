@@ -20,7 +20,7 @@ import ua.com.integer.gdx.xml.ui.util.XUIElementUnwrapper;
  * Facade to convenient work
  */
 public class XUI {
-    private static final XUI instance = new XUI();
+    private static XUI instance;
 
     private static String workingDirectory = "xui";
     private ObjectMap<String, XUIElement> elements = new ObjectMap<>();
@@ -36,6 +36,8 @@ public class XUI {
      * Call this method first to init XUI
      */
     public static void init() {
+        instance = new XUI();
+
         variables().clear();
         XUICreator.init();
         XUIProcessor.init();

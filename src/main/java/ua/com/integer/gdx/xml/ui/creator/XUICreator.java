@@ -4,11 +4,15 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ObjectMap;
 
+import ua.com.integer.gdx.xml.ui.creator.imp.ButtonCreator;
 import ua.com.integer.gdx.xml.ui.creator.imp.GroupCreator;
 import ua.com.integer.gdx.xml.ui.creator.imp.ImageCreator;
 import ua.com.integer.gdx.xml.ui.creator.imp.LabelCreator;
 import ua.com.integer.gdx.xml.ui.creator.imp.ActorCreator;
+import ua.com.integer.gdx.xml.ui.creator.imp.ScrollPaneCreator;
 import ua.com.integer.gdx.xml.ui.creator.imp.SliderCreator;
+import ua.com.integer.gdx.xml.ui.creator.imp.TextButtonCreator;
+import ua.com.integer.gdx.xml.ui.creator.imp.VerticalGroupCreator;
 import ua.com.integer.gdx.xml.ui.element.XUIElement;
 import ua.com.integer.gdx.xml.ui.res.XUIAssetsAccess;
 
@@ -24,11 +28,15 @@ public abstract class XUICreator {
 	public static void init() {
 		creators.clear();
 
-		register("actor", new ActorCreator());
-		register("group", new GroupCreator());
-		register("image", new ImageCreator());
-		register("label", new LabelCreator());
-		register("slider", new SliderCreator());
+		register("Actor", new ActorCreator());
+		register("Group", new GroupCreator());
+		register("Image", new ImageCreator());
+		register("Label", new LabelCreator());
+		register("Slider", new SliderCreator());
+		register("ScrollPane", new ScrollPaneCreator());
+		register("VerticalGroup", new VerticalGroupCreator());
+		register("Button", new ButtonCreator());
+		register("TextButton", new TextButtonCreator());
 	}
 
     /**
@@ -44,6 +52,20 @@ public abstract class XUICreator {
      * Implementation to create actor of specified type
      */
 	protected abstract Actor create(String type);
+
+	/**
+	 * If {@link XUIElement} that under inflating now has attribute with given name
+     */
+	protected boolean hasAttribute(String attributeName) {
+		return element.attributes.containsKey(attributeName);
+	}
+
+	/**
+	 * Return value of specified attribute for {@link XUIElement} that under inflating now
+     */
+	protected String getAttribute(String attributeName) {
+		return element.attributes.get(attributeName);
+	}
 
     /**
      * Creates actor of given type from given XMLElement.

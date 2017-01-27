@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.utils.BaseDrawable;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
@@ -117,5 +118,12 @@ public class XUIAssetsAccess {
      */
     public static Color getColor(String colorName) {
         return XUI.assets().getAsset(colorName, Color.class);
+    }
+
+    /**
+     * Return {@link com.badlogic.gdx.scenes.scene2d.ui.Skin} by name
+     */
+    public static Skin getSkin(String skinName) {
+        return XUI.assets().getAsset(skinName, Skin.class);
     }
 }
