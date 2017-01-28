@@ -5,6 +5,9 @@ import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 
 import ua.com.integer.gdx.xml.ui.processor.XUIProcessor;
 
+/**
+ * Setup {@link Slider}
+ */
 public class SliderProcessor extends XUIProcessor {
     private Slider slider;
     private Slider.SliderStyle style;

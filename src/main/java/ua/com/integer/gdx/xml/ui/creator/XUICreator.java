@@ -6,6 +6,7 @@ import com.badlogic.gdx.utils.ObjectMap;
 
 import ua.com.integer.gdx.xml.ui.creator.imp.ButtonCreator;
 import ua.com.integer.gdx.xml.ui.creator.imp.GroupCreator;
+import ua.com.integer.gdx.xml.ui.creator.imp.HorizontalGroupCreator;
 import ua.com.integer.gdx.xml.ui.creator.imp.ImageCreator;
 import ua.com.integer.gdx.xml.ui.creator.imp.LabelCreator;
 import ua.com.integer.gdx.xml.ui.creator.imp.ActorCreator;
@@ -35,6 +36,7 @@ public abstract class XUICreator {
 		register("Slider", new SliderCreator());
 		register("ScrollPane", new ScrollPaneCreator());
 		register("VerticalGroup", new VerticalGroupCreator());
+		register("HorizontalGroup", new HorizontalGroupCreator());
 		register("Button", new ButtonCreator());
 		register("TextButton", new TextButtonCreator());
 	}

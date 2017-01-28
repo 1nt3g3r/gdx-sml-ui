@@ -7,6 +7,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import ua.com.integer.gdx.xml.ui.creator.XUICreator;
 import ua.com.integer.gdx.xml.ui.res.XUIAssetsAccess;
 
+/**
+ * Creates new {@link Button} with <b>Button</b> name.
+ */
 public class ButtonCreator extends XUICreator {
     @Override
     protected Actor create(String type) {

@@ -15,6 +15,7 @@ import com.badlogic.gdx.utils.Scaling;
 import ua.com.integer.gdx.xml.ui.element.XUIElement;
 import ua.com.integer.gdx.xml.ui.processor.imp.ButtonProcessor;
 import ua.com.integer.gdx.xml.ui.processor.imp.GroupProcessor;
+import ua.com.integer.gdx.xml.ui.processor.imp.HorizontalGroupProcessor;
 import ua.com.integer.gdx.xml.ui.processor.imp.ImageProcessor;
 import ua.com.integer.gdx.xml.ui.processor.imp.LabelProcessor;
 import ua.com.integer.gdx.xml.ui.processor.imp.LayoutProcessor;
@@ -53,6 +54,7 @@ public abstract class XUIProcessor {
         registerProcessors("Label", new LabelProcessor());
         registerProcessors("Slider", new SliderProcessor());
         registerProcessors("VerticalGroup", groupProcessor, layoutProcessor, new VerticalGroupProcessor());
+        registerProcessors("HorizontalGroup", groupProcessor, layoutProcessor, new HorizontalGroupProcessor());
         registerProcessors("ScrollPane", groupProcessor, layoutProcessor, new ScrollPaneProcessor());
         registerProcessors("Button", groupProcessor, layoutProcessor, new ButtonProcessor());
         registerProcessors("TextButton", groupProcessor, layoutProcessor, new TextButtonProcessor());

@@ -26,16 +26,24 @@ public class XUIDrawableParser implements XUIAssetParser {
         if (type.equals("region")) {
             assets.putAsset(drawableName, new TextureRegionDrawable(region), Drawable.class);
         } else if (type.equals("nine-patch")) {
-            int left = 0, right = 0, top = 0, bottom = 0;
-            if (element.getAttributes().containsKey("sideSize")) {
-                left = right = top = bottom = Integer.parseInt(element.getAttribute("sideSize"));
+            NinePatch ninePatch = null;
+            if (element.getAttributes().containsKey("ninepatch")) {
+                ninePatch = new NinePatch(XUIAssetsAccess.getNinePatch(element.getAttribute("ninepatch")));
             } else {
-                left = Integer.parseInt(element.getAttribute("left", "0"));
-                right = Integer.parseInt(element.getAttribute("right", "0"));
-                top = Integer.parseInt(element.getAttribute("top", "0"));
-                bottom = Integer.parseInt(element.getAttribute("bottom", "0"));
+                int left = 0, right = 0, top = 0, bottom = 0;
+                if (element.getAttributes().containsKey("sideSize")) {
+                    left = right = top = bottom = Integer.parseInt(element.getAttribute("sideSize"));
+                } else {
+                    left = Integer.parseInt(element.getAttribute("left", "0"));
+                    right = Integer.parseInt(element.getAttribute("right", "0"));
+                    top = Integer.parseInt(element.getAttribute("top", "0"));
+                    bottom = Integer.parseInt(element.getAttribute("bottom", "0"));
+                }
+
+                ninePatch = new NinePatch(region, left, right, top, bottom);
             }
-            assets.putAsset(drawableName, new NinePatchDrawable(new NinePatch(region, left, right, top, bottom)), Drawable.class);
+
+            assets.putAsset(drawableName, new NinePatchDrawable(ninePatch), Drawable.class);
         }
     }
 }

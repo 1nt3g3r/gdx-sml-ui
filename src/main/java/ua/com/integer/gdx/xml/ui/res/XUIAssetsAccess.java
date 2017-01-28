@@ -5,6 +5,7 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -48,6 +49,20 @@ public class XUIAssetsAccess {
         String regionName = parts[1];
 
         return getAtlas(atlasName).findRegion(regionName);
+    }
+
+    /**
+     * Returns {@link NinePatch} created from specified texture region in specified texture atlas.
+     * See {@link TextureAtlas#createPatch(String)}
+     *
+     * @param atlasAndNinePatchName See {@link XUIAssetsAccess#getTextureRegion(String)} to get understanding how to parse this value
+     */
+    public static NinePatch getNinePatch(String atlasAndNinePatchName) {
+        String[] parts = atlasAndNinePatchName.split("->");
+        String atlasName = parts[0];
+        String patchName = parts[1];
+
+        return getAtlas(atlasName).createPatch(patchName);
     }
 
     /**

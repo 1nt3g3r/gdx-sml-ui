@@ -1,16 +1,16 @@
 package ua.com.integer.gdx.xml.ui.processor.imp;
 
-import com.badlogic.gdx.scenes.scene2d.ui.VerticalGroup;
+import com.badlogic.gdx.scenes.scene2d.ui.HorizontalGroup;
 
 import ua.com.integer.gdx.xml.ui.processor.XUIProcessor;
 
 /**
- * Setup {@link VerticalGroup}
+ * Setup {@link HorizontalGroup}
  */
-public class VerticalGroupProcessor extends XUIProcessor {
+public class HorizontalGroupProcessor extends XUIProcessor {
     @Override
     public void process() {
-        VerticalGroup vGroup = (VerticalGroup) element.resultActor;
+        HorizontalGroup vGroup = (HorizontalGroup) element.resultActor;
 
         if (hasAttribute("round")) {
             vGroup.setRound(getBoolean("round"));
@@ -51,6 +51,5 @@ public class VerticalGroupProcessor extends XUIProcessor {
         if (hasAttribute("fill")) {
             vGroup.fill(eval("fill"));
         }
-
     }
 }

@@ -18,7 +18,8 @@ public class LabelCreator extends XUICreator {
         Label result = null;
 
         if (element.attributes.containsKey("skin")) {
-            result = new Label("", XUIAssetsAccess.getSkin(element.attributes.get("skin")));
+            Label.LabelStyle labelStyle = new Label.LabelStyle(XUIAssetsAccess.getSkin(element.attributes.get("skin")).get(Label.LabelStyle.class));
+            result = new Label("", labelStyle);
         } else {
             String fontName = element.attributes.get("font");
             BitmapFont font = XUI.assets().getAsset(fontName, BitmapFont.class);
