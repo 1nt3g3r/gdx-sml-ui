@@ -14,6 +14,7 @@ import com.badlogic.gdx.utils.Scaling;
 
 import ua.com.integer.gdx.xml.ui.element.XUIElement;
 import ua.com.integer.gdx.xml.ui.processor.imp.ButtonProcessor;
+import ua.com.integer.gdx.xml.ui.processor.imp.CheckBoxProcessor;
 import ua.com.integer.gdx.xml.ui.processor.imp.GroupProcessor;
 import ua.com.integer.gdx.xml.ui.processor.imp.HorizontalGroupProcessor;
 import ua.com.integer.gdx.xml.ui.processor.imp.ImageProcessor;
@@ -58,6 +59,7 @@ public abstract class XUIProcessor {
         registerProcessors("ScrollPane", groupProcessor, layoutProcessor, new ScrollPaneProcessor());
         registerProcessors("Button", groupProcessor, layoutProcessor, new ButtonProcessor());
         registerProcessors("TextButton", groupProcessor, layoutProcessor, new TextButtonProcessor());
+        registerProcessors("CheckBox", groupProcessor, layoutProcessor, new CheckBoxProcessor());
     }
 
     /**

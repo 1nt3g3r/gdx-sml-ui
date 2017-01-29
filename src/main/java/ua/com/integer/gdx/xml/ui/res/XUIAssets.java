@@ -7,6 +7,7 @@ import com.badlogic.gdx.utils.XmlReader;
 
 import ua.com.integer.gdx.xml.ui.XUI;
 import ua.com.integer.gdx.xml.ui.res.parser.XUIAssetParser;
+import ua.com.integer.gdx.xml.ui.res.parser.imp.XUIButtonGroupParser;
 import ua.com.integer.gdx.xml.ui.res.parser.imp.XUIColorParser;
 import ua.com.integer.gdx.xml.ui.res.parser.imp.XUIDrawableParser;
 import ua.com.integer.gdx.xml.ui.res.parser.imp.XUIVariableParser;
@@ -49,6 +50,7 @@ public class XUIAssets {
         registerAssetParser("color", new XUIColorParser(this));
         registerAssetParser("drawable", new XUIDrawableParser());
         registerAssetParser("var", new XUIVariableParser());
+        registerAssetParser("buttonGroup", new XUIButtonGroupParser());
     }
 
     /**
@@ -76,7 +78,8 @@ public class XUIAssets {
     }
 
     private void parseAsset(XmlReader.Element assetElement) {
-        XUIAssetParser parser = assetParsers.get(assetElement.getName());
+        String assetType = assetElement.getName();
+        XUIAssetParser parser = assetParsers.get(assetType);
         if (parser != null) {
             parser.parse(assetElement, this);
         }

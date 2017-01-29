@@ -1,7 +1,9 @@
 package ua.com.integer.gdx.xml.ui.processor.imp;
 
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
+import com.badlogic.gdx.scenes.scene2d.ui.ButtonGroup;
 
+import ua.com.integer.gdx.xml.ui.XUI;
 import ua.com.integer.gdx.xml.ui.processor.XUIProcessor;
 
 /**
@@ -24,6 +26,11 @@ public class ButtonProcessor extends XUIProcessor {
 
         if (hasAttribute("programmaticChangeEvents")) {
             button.setProgrammaticChangeEvents(getBoolean("programmaticChangeEvents"));
+        }
+
+        if (hasAttribute("buttonGroup")) {
+            ButtonGroup buttonGroup = XUI.assets().getAsset(getAttribute("buttonGroup"), ButtonGroup.class);
+            buttonGroup.add(button);
         }
 
         setupStyle();

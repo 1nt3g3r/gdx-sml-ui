@@ -5,6 +5,7 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ObjectMap;
 
 import ua.com.integer.gdx.xml.ui.creator.imp.ButtonCreator;
+import ua.com.integer.gdx.xml.ui.creator.imp.CheckboxCreator;
 import ua.com.integer.gdx.xml.ui.creator.imp.GroupCreator;
 import ua.com.integer.gdx.xml.ui.creator.imp.HorizontalGroupCreator;
 import ua.com.integer.gdx.xml.ui.creator.imp.ImageCreator;
@@ -39,6 +40,7 @@ public abstract class XUICreator {
 		register("HorizontalGroup", new HorizontalGroupCreator());
 		register("Button", new ButtonCreator());
 		register("TextButton", new TextButtonCreator());
+        register("CheckBox", new CheckboxCreator());
 	}
 
     /**
@@ -85,7 +87,8 @@ public abstract class XUICreator {
 			result.setUserObject(element);
 			return result;
 		}
-		return null;
+
+        throw new IllegalArgumentException("There is no creator for " + type + " type!");
 	}
 
 	private static void replaceVariables(XUIElement element) {
