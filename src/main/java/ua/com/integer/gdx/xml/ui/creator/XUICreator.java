@@ -14,6 +14,7 @@ import ua.com.integer.gdx.xml.ui.creator.imp.ActorCreator;
 import ua.com.integer.gdx.xml.ui.creator.imp.ScrollPaneCreator;
 import ua.com.integer.gdx.xml.ui.creator.imp.SliderCreator;
 import ua.com.integer.gdx.xml.ui.creator.imp.TextButtonCreator;
+import ua.com.integer.gdx.xml.ui.creator.imp.TouchpadCreator;
 import ua.com.integer.gdx.xml.ui.creator.imp.VerticalGroupCreator;
 import ua.com.integer.gdx.xml.ui.element.XUIElement;
 import ua.com.integer.gdx.xml.ui.res.XUIAssetsAccess;
@@ -41,6 +42,7 @@ public abstract class XUICreator {
 		register("Button", new ButtonCreator());
 		register("TextButton", new TextButtonCreator());
         register("CheckBox", new CheckboxCreator());
+		register("Touchpad", new TouchpadCreator());
 	}
 
     /**

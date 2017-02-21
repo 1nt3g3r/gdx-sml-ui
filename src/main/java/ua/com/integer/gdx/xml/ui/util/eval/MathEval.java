@@ -17,6 +17,7 @@ import java.util.TreeMap;
 // is not liable for any losses of any kind, direct or indirect, which result
 // from the use of this software.
 
+
 public class MathEval extends Object {
     static public final int LEFT_SIDE = 'L';
     static public final int RIGHT_SIDE = 'R';

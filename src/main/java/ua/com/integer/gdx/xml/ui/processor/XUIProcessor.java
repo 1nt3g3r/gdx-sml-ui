@@ -23,6 +23,7 @@ import ua.com.integer.gdx.xml.ui.processor.imp.LayoutProcessor;
 import ua.com.integer.gdx.xml.ui.processor.imp.ScrollPaneProcessor;
 import ua.com.integer.gdx.xml.ui.processor.imp.SliderProcessor;
 import ua.com.integer.gdx.xml.ui.processor.imp.TextButtonProcessor;
+import ua.com.integer.gdx.xml.ui.processor.imp.TouchpadProcessor;
 import ua.com.integer.gdx.xml.ui.processor.imp.VerticalGroupProcessor;
 import ua.com.integer.gdx.xml.ui.processor.imp.common.CommonPropertiesProcessor;
 import ua.com.integer.gdx.xml.ui.processor.imp.common.LocalizeProcessor;
@@ -60,6 +61,7 @@ public abstract class XUIProcessor {
         registerProcessors("Button", groupProcessor, layoutProcessor, new ButtonProcessor());
         registerProcessors("TextButton", groupProcessor, layoutProcessor, new TextButtonProcessor());
         registerProcessors("CheckBox", groupProcessor, layoutProcessor, new CheckBoxProcessor());
+        registerProcessors("Touchpad", layoutProcessor, new TouchpadProcessor());
     }
 
     /**
@@ -245,6 +247,18 @@ public abstract class XUIProcessor {
     protected void setupDrawableParams(Drawable drawable, String drawableName) {
         if (drawable == null) {
             return;
+        }
+
+        String size = drawableName + "Size";
+        if (hasAttribute(size)) {
+            float evalSize = eval(size);
+            drawable.setMinWidth(evalSize);
+            drawable.setLeftWidth(evalSize);
+            drawable.setRightWidth(evalSize);
+
+            drawable.setMinHeight(evalSize);
+            drawable.setTopHeight(evalSize);
+            drawable.setBottomHeight(evalSize);
         }
 
         String minWidth = drawableName + "MinWidth";
